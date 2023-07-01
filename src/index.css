@@ -1,15 +1,18 @@
+@font-face {
+  font-family: "JetBrains";
+  src: local("JetBrains"),
+    url("assets/fonts/JetBrains_Mono/static/JetBrainsMono-Regular.ttf") format("truetype");
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  /* font-family: "JetBrains"; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
- h1, h2, h3, h4, h5, h6 {
+ /* h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-size: 64px;
   }
 
   span, p, a {
@@ -24,7 +27,7 @@ body {
 
   img {
     display: block;
-  }
+  } */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
