@@ -92,3 +92,128 @@ export const Range = styled(Form.Range)<StyleProps>`
     );
   }
 `;
+
+export const CheckBox = styled(Form.Check)`
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+
+padding-top: ${props => props.theme.space[8]};
+`
+export const ChecksContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &:not(:last-child){
+    margin-bottom: ${props=> props.theme.space[4]};
+  }
+`;
+
+export const CheckInput = styled(Form.Check.Input)`
+  margin: 0;
+  margin-right: ${(props) => props.theme.space[5]};
+
+  width: ${(props) => props.theme.space[5]};
+  height: ${(props) => props.theme.space[5]};
+
+  &&&,
+  &&&:active,
+  &&&:hover,
+  &&&:focus {
+    background-color: ${(props) => props.theme.color.background};
+    border: 1px solid ${(props) => props.theme.color.text};
+    box-shadow: none;
+  }
+
+  &&&:checked {
+    background-color: ${(props) => props.theme.color.success};
+    background-image: url(${props => props.arrow});
+    background-size: 11px 8px;
+  }
+`;
+
+export const CheckText = styled(Form.Check.Label)`
+  &&& {
+    color: ${(props) => props.theme.color.text};
+    font-weight: ${props => props.theme.weight.bold};
+    font-size: ${props => props.theme.size.N};
+  }
+`;
+
+export const StrengthContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: ${(props) => props.theme.space[8]};
+
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-right: ${(props) => props.theme.space[4]};
+  padding-left: ${(props) => props.theme.space[4]};
+
+  background-color: ${props => props.theme.color.background};
+`;
+
+export const StrengthTitle = styled.h3`
+  text-transform: uppercase;
+  color: ${(props) => props.theme.color.textSecondary};
+  font-weight: ${(props) => props.theme.weight.bold};
+  font-size: ${(props) => props.theme.size.N};
+`;
+
+export const StrengthIndicatorContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+`
+
+export const StrengthIndicatorText = styled.h4`
+  margin-right: ${(props) => props.theme.space[4]};
+
+  text-transform: uppercase;
+  line-height: 1.29;
+
+  font-size: ${(props) => props.theme.size.XXN};
+  font-weight: ${(props) => props.theme.weight.bold};
+`;
+
+export const StrengthIndicatorItem = styled.div`
+  width: 10px;
+  height: 28px;
+
+  border: 1px solid ${(props) => props.theme.color.text};
+  line-height: 1.29;
+
+  &:not(:last-child) {
+    margin-right: ${(props) => props.theme.space[2]};
+  }
+`;
+
+export const SubmitButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+margin-top: ${props => props.theme.space[4]};
+
+  padding-top: 18px;
+  padding-bottom: 18px;
+
+  background-color: ${(props) => props.theme.color.success};
+
+  & > span {
+    margin-right: ${(props) => props.theme.space[4]};
+
+    text-transform: uppercase;
+    line-height: 1.29;
+
+    font-size: ${(props) => props.theme.size.N};
+    font-weight: ${(props) => props.theme.weight.bold};
+  }
+`;
