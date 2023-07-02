@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
-import Form from "react-bootstrap/Form";
 
 import * as SC from "./PasswordFormStyled"
 
 import optionsCheck from "dataBase/checkOptions.json"
 import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
-import {ReactComponent as CheckedArrow} from "assets/images/icon-check.svg"
+import { ReactComponent as ArrowSvg } from "assets/images/icon-arrow-right.svg"
+
 import path from "assets/images/Path 2.png"
 interface IValues {
     password: string,
@@ -13,7 +13,6 @@ interface IValues {
     maxLength: number,
 }
 
-const arrow = CheckedArrow
 
 const PasswordForm = (): JSX.Element => {
 
@@ -33,11 +32,17 @@ const PasswordForm = (): JSX.Element => {
 
     }
 
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>):void => {
+        evt.preventDefault()
+        formik.handleSubmit(evt)
+        
+    }
+
     const position = Number((formik.values.charLength / formik.values.maxLength * 100).toFixed(2))
 
 
 
-    return (<form>
+    return (<form onSubmit={handleSubmit}>
         <SC.DisplayContainer>
             <SC.Display type="text" value={formik.values.password} disabled />
             <SC.CopyButton><CopySvg /></SC.CopyButton>
@@ -50,13 +55,24 @@ const PasswordForm = (): JSX.Element => {
                 </SC.RangeIndicatorContainer>
                 <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
-                <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
-                    {optionsCheck.map((el) => <SC.ChecksContainer>
-                        <SC.CheckInput type='checkbox' isValid arrow={path} />
-                        <Form.Check.Label>{el}</Form.Check.Label>
-                    </SC.ChecksContainer>
-                    )}
-                </SC.CheckBox>
+            <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
+                {optionsCheck.map((el) => <SC.ChecksContainer key={el}>
+                    <SC.CheckInput type='checkbox' isValid arrow={path} />
+                    <SC.CheckText>{el}</SC.CheckText>
+                </SC.ChecksContainer>
+                )}
+            </SC.CheckBox>
+            <SC.StrengthContainer>
+                <SC.StrengthTitle>strength</SC.StrengthTitle>
+                <SC.StrengthIndicatorContainer>
+                    <SC.StrengthIndicatorText>medium</SC.StrengthIndicatorText>
+                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                </SC.StrengthIndicatorContainer>
+            </SC.StrengthContainer>
+            <SC.SubmitButton type="submit"><span>generate</span> <ArrowSvg /></SC.SubmitButton>
         </SC.OptionContainer>
     </form>);
 }
