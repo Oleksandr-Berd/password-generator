@@ -7,69 +7,116 @@ import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
 import { ReactComponent as ArrowSvg } from "assets/images/icon-arrow-right.svg"
 
 import path from "assets/images/Path 2.png"
-interface IValues {
+
+interface IProps {
     password: string,
+    handleGenerate: Function,
+    strengthIndicator: string,
+}
+interface IValues {
     charLength: number,
     maxLength: number,
+    uppercase: boolean,
+    lowercase: boolean,
+    numbers: boolean,
+    symbols: boolean,
+    arrayIndicators: boolean[],
+    [key: string]: boolean | number | boolean[];
 }
 
 
-const PasswordForm = (): JSX.Element => {
+const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): JSX.Element => {
 
-    const formik = useFormik<IValues>({
+    const formic = useFormik<IValues>({
         initialValues: {
-            password: "",
             charLength: 10,
             maxLength: 20,
-
+            uppercase: false,
+            lowercase: false,
+            numbers: false,
+            symbols: false,
+            arrayIndicators: [],
         }, onSubmit: (values) => {
-            console.log(values);
+            formic.setValues((values) => ({
+                ...values,
+                uppercase: false,
+                lowercase: false,
+                numbers: false,
+                symbols: false,
+                arrayIndicators: [],
+            }));
+
+            if (values.uppercase) values.arrayIndicators.push(values.uppercase)
+            if (values.lowercase) values.arrayIndicators.push(values.lowercase)
+            if (values.numbers) values.arrayIndicators.push(values.numbers)
+            if (values.symbols) values.arrayIndicators.push(values.symbols)
+
+            const status = values.arrayIndicators
+            console.log(status);
+            
+            handleGenerate(status)
+
+
         }
-    })
+    })  
+
+
 
     const handleRangeChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
-        formik.handleChange(evt)
+        formic.handleChange(evt)
 
     }
 
-    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>):void => {
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
         evt.preventDefault()
-        formik.handleSubmit(evt)
-        
+
+        formic.handleSubmit(evt)
+
+
     }
 
-    const position = Number((formik.values.charLength / formik.values.maxLength * 100).toFixed(2))
+    const handleCheckChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+        formic.handleChange(evt)
 
+    }
+
+    const position = Number((formic.values.charLength / formic.values.maxLength * 100).toFixed(2))
+    console.log(strengthIndicator);
 
 
     return (<form onSubmit={handleSubmit}>
         <SC.DisplayContainer>
-            <SC.Display type="text" value={formik.values.password} disabled />
+            <SC.Display type="text" value={password} disabled />
             <SC.CopyButton><CopySvg /></SC.CopyButton>
         </SC.DisplayContainer>
         <SC.OptionContainer>
             <div>
                 <SC.RangeIndicatorContainer>
                     <SC.RangeTitle>Character Length</SC.RangeTitle>
-                    <SC.RangeIndicator>{formik.values.charLength}</SC.RangeIndicator>
+                    <SC.RangeIndicator>{formic.values.charLength}</SC.RangeIndicator>
                 </SC.RangeIndicatorContainer>
                 <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
             <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
-                {optionsCheck.map((el) => <SC.ChecksContainer key={el}>
-                    <SC.CheckInput type='checkbox' isValid arrow={path} />
-                    <SC.CheckText>{el}</SC.CheckText>
-                </SC.ChecksContainer>
+                {optionsCheck.map((el) => {
+                    const indicator = el.split(" ")[1].toLowerCase()
+                    return <SC.ChecksContainer key={el}>
+                        <SC.CheckInput type='checkbox' isValid arrow={path} name={indicator} onChange={handleCheckChange} checked={formic.values[indicator]} />
+                        <SC.CheckText>{el}</SC.CheckText>
+                    </SC.ChecksContainer>
+                }
+
                 )}
             </SC.CheckBox>
             <SC.StrengthContainer>
                 <SC.StrengthTitle>strength</SC.StrengthTitle>
                 <SC.StrengthIndicatorContainer>
-                    <SC.StrengthIndicatorText>medium</SC.StrengthIndicatorText>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorText>{strengthIndicator}</SC.StrengthIndicatorText>
+                    <SC.StrengthIndicatorItem active={strengthIndicator !== "" ? "true" : undefined} status_color={strengthIndicator}
+                    ></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator !== "" && strengthIndicator !== "too weak!" ? "true" : undefined} status_color={strengthIndicator}></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator === "medium" || strengthIndicator === "strong" ? "true" : undefined} status_color={strengthIndicator}></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator === "strong" ? "true" : undefined} status_color={strengthIndicator}></SC.StrengthIndicatorItem>
                 </SC.StrengthIndicatorContainer>
             </SC.StrengthContainer>
             <SC.SubmitButton type="submit"><span>generate</span> <ArrowSvg /></SC.SubmitButton>
@@ -78,3 +125,5 @@ const PasswordForm = (): JSX.Element => {
 }
 
 export default PasswordForm;
+
+// status = { formic.values.arrayIndicators.length > 0 ? formic.values.arrayIndicators.length : null }
