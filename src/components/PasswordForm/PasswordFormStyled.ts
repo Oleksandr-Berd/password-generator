@@ -3,7 +3,9 @@ import Form from "react-bootstrap/Form";
 
 interface StyleProps {
   position?: number;
-}
+  active?: string | undefined;
+  status_color?: string;
+};
 
 export const DisplayContainer = styled.div`
   display: flex;
@@ -180,12 +182,23 @@ export const StrengthIndicatorText = styled.h4`
   font-weight: ${(props) => props.theme.weight.bold};
 `;
 
-export const StrengthIndicatorItem = styled.div`
+export const StrengthIndicatorItem = styled.div<StyleProps>`
   width: 10px;
   height: 28px;
 
   border: 1px solid ${(props) => props.theme.color.text};
   line-height: 1.29;
+
+  background-color: ${(props) =>
+    props.active && props.status_color === "too weak!"
+      ? props.theme.color.poor
+      : props.active && props.status_color === "weak"
+      ? props.theme.color.weak
+      : props.active && props.status_color === "medium"
+      ? props.theme.color.medium
+      : props.active && props.status_color === "strong"
+      ? props.theme.color.success
+      : "transparent"};
 
   &:not(:last-child) {
     margin-right: ${(props) => props.theme.space[2]};

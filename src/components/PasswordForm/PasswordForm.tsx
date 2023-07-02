@@ -52,11 +52,13 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
             if (values.symbols) values.arrayIndicators.push(values.symbols)
 
             const status = values.arrayIndicators
+            console.log(status);
+            
             handleGenerate(status)
 
 
         }
-    })
+    })  
 
 
 
@@ -79,6 +81,7 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
     }
 
     const position = Number((formic.values.charLength / formic.values.maxLength * 100).toFixed(2))
+    console.log(strengthIndicator);
 
 
     return (<form onSubmit={handleSubmit}>
@@ -95,25 +98,25 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
                 <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
             <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
-                {optionsCheck.map((el) =>
-                {
-                    const indicator = el.split(" ")[1].toLowerCase()                    
+                {optionsCheck.map((el) => {
+                    const indicator = el.split(" ")[1].toLowerCase()
                     return <SC.ChecksContainer key={el}>
                         <SC.CheckInput type='checkbox' isValid arrow={path} name={indicator} onChange={handleCheckChange} checked={formic.values[indicator]} />
                         <SC.CheckText>{el}</SC.CheckText>
                     </SC.ChecksContainer>
                 }
-                   
+
                 )}
             </SC.CheckBox>
             <SC.StrengthContainer>
                 <SC.StrengthTitle>strength</SC.StrengthTitle>
                 <SC.StrengthIndicatorContainer>
                     <SC.StrengthIndicatorText>{strengthIndicator}</SC.StrengthIndicatorText>
-                    <SC.StrengthIndicatorItem ></SC.StrengthIndicatorItem>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator !== "" ? "true" : undefined} status_color={strengthIndicator}
+                    ></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator !== "" && strengthIndicator !== "too weak!" ? "true" : undefined} status_color={strengthIndicator}></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator === "medium" || strengthIndicator === "strong" ? "true" : undefined} status_color={strengthIndicator}></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorItem active={strengthIndicator === "strong" ? "true" : undefined} status_color={strengthIndicator}></SC.StrengthIndicatorItem>
                 </SC.StrengthIndicatorContainer>
             </SC.StrengthContainer>
             <SC.SubmitButton type="submit"><span>generate</span> <ArrowSvg /></SC.SubmitButton>
@@ -122,3 +125,5 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
 }
 
 export default PasswordForm;
+
+// status = { formic.values.arrayIndicators.length > 0 ? formic.values.arrayIndicators.length : null }

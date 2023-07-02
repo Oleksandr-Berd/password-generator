@@ -5,13 +5,11 @@ import * as SC from "./PasswordGeneratorStyled"
 
 const PasswordGenerator = (): JSX.Element => {
     const [password, setPassword] = useState<string>("")
-    const [strengthIndicator, setStrengthIndicator] = useState<string>("too weak!")
+    const [strengthIndicator, setStrengthIndicator] = useState<string>("")
 
   const strength = ["too weak!", "weak", "medium", "strong"]
    
     const handleGenerate = (status:boolean[]) => {
-
-        console.log(status);
         
         status.length > 0 ? setStrengthIndicator(strength[status.length - 1]) : setStrengthIndicator("too weak!")
     }
