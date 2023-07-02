@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import Form from 'react-bootstrap/Form';
 
 import * as SC from "./PasswordFormStyled"
 
@@ -8,6 +7,7 @@ import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
 interface IValues {
     password: string,
     charLength: number,
+    maxLength: number,
 }
 
 
@@ -17,6 +17,8 @@ const PasswordForm = (): JSX.Element => {
         initialValues: {
             password: "",
             charLength: 10,
+            maxLength: 20,
+
         }, onSubmit: (values) => {
             console.log(values);
         }
@@ -24,7 +26,12 @@ const PasswordForm = (): JSX.Element => {
 
     const handleRangeChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
         formik.handleChange(evt)
+
     }
+
+    const position =Number((formik.values.charLength / formik.values.maxLength * 100).toFixed(2))
+
+    
 
     return (<form>
         <SC.DisplayContainer>
@@ -37,7 +44,7 @@ const PasswordForm = (): JSX.Element => {
                     <SC.RangeTitle>Character Length</SC.RangeTitle>
                     <SC.RangeIndicator>{formik.values.charLength}</SC.RangeIndicator>
                 </SC.RangeIndicatorContainer>
-                <Form.Range name="charLength" max={20} onChange={handleRangeChange} />
+                <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
         </SC.OptionContainer>
     </form>);

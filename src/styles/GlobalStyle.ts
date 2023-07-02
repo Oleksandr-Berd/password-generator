@@ -4,6 +4,8 @@ export const GlobalStyles: any = createGlobalStyle`
 
 body{
     font-family: "JetBrains";
+  background-color: ${(props) => props.theme.color.background};
+
     color:${(props) => props.theme.color.text}
 }
 

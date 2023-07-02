@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 
+interface StyleProps {
+  position?: number;
+}
+
 export const DisplayContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -48,7 +52,7 @@ export const RangeIndicatorContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-margin-bottom: ${props => props.theme.space[2]} ;
+  margin-bottom: ${(props) => props.theme.space[2]};
 `;
 
 export const RangeIndicator = styled.div`
@@ -59,8 +63,32 @@ export const RangeIndicator = styled.div`
 
 export const RangeTitle = styled(Form.Label)`
   margin: 0;
+  margin-bottom: 18px;
 
   font-size: ${(props) => props.theme.size.N};
   line-height: 1.29;
   font-weight: ${(props) => props.theme.weight.bold};
+`;
+
+export const Range = styled(Form.Range)<StyleProps>`
+  height: ${(props) => props.theme.space[2]};
+
+  &::-webkit-slider-thumb {
+    transform: translateY(-25%);
+
+    width: ${(props) => props.theme.space[7]};
+    height: ${(props) => props.theme.space[7]};
+
+    background-color: ${(props) => props.theme.color.text};
+  }
+
+  &::-webkit-slider-runnable-track {
+    background: linear-gradient(
+      to right,
+      ${(props) => props.theme.color.success} 0%,
+      ${(props) => props.theme.color.success} ${(props) => props.position}%,
+      ${(props) => props.theme.color.background} ${(props) => props.position}%,
+      ${(props) => props.theme.color.background} 100%
+    );
+  }
 `;
