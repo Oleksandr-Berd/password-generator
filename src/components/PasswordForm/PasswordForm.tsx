@@ -7,7 +7,6 @@ import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
 import { ReactComponent as ArrowSvg } from "assets/images/icon-arrow-right.svg"
 
 import path from "assets/images/Path 2.png"
-import { useEffect } from "react";
 
 interface IProps {
     password: string,
@@ -22,6 +21,7 @@ interface IValues {
     numbers: boolean,
     symbols: boolean,
     arrayIndicators: boolean[],
+    [key: string]: boolean | number | boolean[];
 }
 
 
@@ -37,16 +37,14 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
             symbols: false,
             arrayIndicators: [],
         }, onSubmit: (values) => {
-            const initial = {
-                charLength: 10,
-                maxLength: 20,
+            formic.setValues((values) => ({
+                ...values,
                 uppercase: false,
                 lowercase: false,
                 numbers: false,
                 symbols: false,
                 arrayIndicators: [],
-            }
-            formic.resetForm({ values: initial })
+            }));
 
             if (values.uppercase) values.arrayIndicators.push(values.uppercase)
             if (values.lowercase) values.arrayIndicators.push(values.lowercase)
@@ -69,7 +67,7 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
         evt.preventDefault()
-      
+
         formic.handleSubmit(evt)
 
 
@@ -97,10 +95,15 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
                 <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
             <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
-                {optionsCheck.map((el) => <SC.ChecksContainer key={el}>
-                    <SC.CheckInput type='checkbox' isValid arrow={path} name={el.split(" ")[1].toLowerCase()} onChange={handleCheckChange} />
-                    <SC.CheckText>{el}</SC.CheckText>
-                </SC.ChecksContainer>
+                {optionsCheck.map((el) =>
+                {
+                    const indicator = el.split(" ")[1].toLowerCase()                    
+                    return <SC.ChecksContainer key={el}>
+                        <SC.CheckInput type='checkbox' isValid arrow={path} name={indicator} onChange={handleCheckChange} checked={formic.values[indicator]} />
+                        <SC.CheckText>{el}</SC.CheckText>
+                    </SC.ChecksContainer>
+                }
+                   
                 )}
             </SC.CheckBox>
             <SC.StrengthContainer>

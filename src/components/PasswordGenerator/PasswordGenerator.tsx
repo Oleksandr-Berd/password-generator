@@ -11,6 +11,8 @@ const PasswordGenerator = (): JSX.Element => {
    
     const handleGenerate = (status:boolean[]) => {
 
+        console.log(status);
+        
         status.length > 0 ? setStrengthIndicator(strength[status.length - 1]) : setStrengthIndicator("too weak!")
     }
     
