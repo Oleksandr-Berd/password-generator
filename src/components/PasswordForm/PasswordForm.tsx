@@ -7,57 +7,98 @@ import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
 import { ReactComponent as ArrowSvg } from "assets/images/icon-arrow-right.svg"
 
 import path from "assets/images/Path 2.png"
-interface IValues {
+import { useEffect } from "react";
+
+interface IProps {
     password: string,
+    handleGenerate: Function,
+    strengthIndicator: string,
+}
+interface IValues {
     charLength: number,
     maxLength: number,
+    uppercase: boolean,
+    lowercase: boolean,
+    numbers: boolean,
+    symbols: boolean,
+    arrayIndicators: boolean[],
 }
 
 
-const PasswordForm = (): JSX.Element => {
+const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): JSX.Element => {
 
-    const formik = useFormik<IValues>({
+    const formic = useFormik<IValues>({
         initialValues: {
-            password: "",
             charLength: 10,
             maxLength: 20,
-
+            uppercase: false,
+            lowercase: false,
+            numbers: false,
+            symbols: false,
+            arrayIndicators: [],
         }, onSubmit: (values) => {
-            console.log(values);
+            const initial = {
+                charLength: 10,
+                maxLength: 20,
+                uppercase: false,
+                lowercase: false,
+                numbers: false,
+                symbols: false,
+                arrayIndicators: [],
+            }
+            formic.resetForm({ values: initial })
+
+            if (values.uppercase) values.arrayIndicators.push(values.uppercase)
+            if (values.lowercase) values.arrayIndicators.push(values.lowercase)
+            if (values.numbers) values.arrayIndicators.push(values.numbers)
+            if (values.symbols) values.arrayIndicators.push(values.symbols)
+
+            const status = values.arrayIndicators
+            handleGenerate(status)
+
+
         }
     })
 
+
+
     const handleRangeChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
-        formik.handleChange(evt)
+        formic.handleChange(evt)
 
     }
 
-    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>):void => {
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
         evt.preventDefault()
-        formik.handleSubmit(evt)
-        
+      
+        formic.handleSubmit(evt)
+
+
     }
 
-    const position = Number((formik.values.charLength / formik.values.maxLength * 100).toFixed(2))
+    const handleCheckChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+        formic.handleChange(evt)
 
+    }
+
+    const position = Number((formic.values.charLength / formic.values.maxLength * 100).toFixed(2))
 
 
     return (<form onSubmit={handleSubmit}>
         <SC.DisplayContainer>
-            <SC.Display type="text" value={formik.values.password} disabled />
+            <SC.Display type="text" value={password} disabled />
             <SC.CopyButton><CopySvg /></SC.CopyButton>
         </SC.DisplayContainer>
         <SC.OptionContainer>
             <div>
                 <SC.RangeIndicatorContainer>
                     <SC.RangeTitle>Character Length</SC.RangeTitle>
-                    <SC.RangeIndicator>{formik.values.charLength}</SC.RangeIndicator>
+                    <SC.RangeIndicator>{formic.values.charLength}</SC.RangeIndicator>
                 </SC.RangeIndicatorContainer>
                 <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
             <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
                 {optionsCheck.map((el) => <SC.ChecksContainer key={el}>
-                    <SC.CheckInput type='checkbox' isValid arrow={path} />
+                    <SC.CheckInput type='checkbox' isValid arrow={path} name={el.split(" ")[1].toLowerCase()} onChange={handleCheckChange} />
                     <SC.CheckText>{el}</SC.CheckText>
                 </SC.ChecksContainer>
                 )}
@@ -65,8 +106,8 @@ const PasswordForm = (): JSX.Element => {
             <SC.StrengthContainer>
                 <SC.StrengthTitle>strength</SC.StrengthTitle>
                 <SC.StrengthIndicatorContainer>
-                    <SC.StrengthIndicatorText>medium</SC.StrengthIndicatorText>
-                    <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
+                    <SC.StrengthIndicatorText>{strengthIndicator}</SC.StrengthIndicatorText>
+                    <SC.StrengthIndicatorItem ></SC.StrengthIndicatorItem>
                     <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
                     <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
                     <SC.StrengthIndicatorItem></SC.StrengthIndicatorItem>
