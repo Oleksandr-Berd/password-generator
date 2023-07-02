@@ -1,15 +1,19 @@
 import { useFormik } from "formik";
+import Form from "react-bootstrap/Form";
 
 import * as SC from "./PasswordFormStyled"
 
+import optionsCheck from "dataBase/checkOptions.json"
 import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
-
+import {ReactComponent as CheckedArrow} from "assets/images/icon-check.svg"
+import path from "assets/images/Path 2.png"
 interface IValues {
     password: string,
     charLength: number,
     maxLength: number,
 }
 
+const arrow = CheckedArrow
 
 const PasswordForm = (): JSX.Element => {
 
@@ -29,9 +33,9 @@ const PasswordForm = (): JSX.Element => {
 
     }
 
-    const position =Number((formik.values.charLength / formik.values.maxLength * 100).toFixed(2))
+    const position = Number((formik.values.charLength / formik.values.maxLength * 100).toFixed(2))
 
-    
+
 
     return (<form>
         <SC.DisplayContainer>
@@ -46,6 +50,13 @@ const PasswordForm = (): JSX.Element => {
                 </SC.RangeIndicatorContainer>
                 <SC.Range name="charLength" min={0} max={20} onChange={handleRangeChange} position={position} />
             </div>
+                <SC.CheckBox type='checkbox' id={`check-api-checkbox`}>
+                    {optionsCheck.map((el) => <SC.ChecksContainer>
+                        <SC.CheckInput type='checkbox' isValid arrow={path} />
+                        <Form.Check.Label>{el}</Form.Check.Label>
+                    </SC.ChecksContainer>
+                    )}
+                </SC.CheckBox>
         </SC.OptionContainer>
     </form>);
 }

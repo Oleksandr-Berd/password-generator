@@ -92,3 +92,43 @@ export const Range = styled(Form.Range)<StyleProps>`
     );
   }
 `;
+
+export const CheckBox = styled(Form.Check)`
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+
+padding-top: ${props => props.theme.space[8]};
+`
+export const ChecksContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &:not(:last-child){
+    margin-bottom: ${props=> props.theme.space[4]};
+  }
+`;
+
+export const CheckInput = styled(Form.Check.Input)`
+  margin: 0;
+  margin-right: ${(props) => props.theme.space[5]};
+
+  width: ${(props) => props.theme.space[5]};
+  height: ${(props) => props.theme.space[5]};
+
+  &&&,
+  &&&:active,
+  &&&:hover,
+  &&&:focus {
+    background-color: ${(props) => props.theme.color.background};
+    border: 1px solid ${(props) => props.theme.color.text};
+    box-shadow: none;
+  }
+
+  &&&:checked {
+    background-color: ${(props) => props.theme.color.success};
+    background-image: url(${props => props.arrow});
+    background-size: 11px 8px;
+  }
+`;
