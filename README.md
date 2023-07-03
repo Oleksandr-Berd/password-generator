@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+Frontend Mentor - Password generator app solution
+This is a solution to the Password generator app challenge on Frontend Mentor. Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Table of contents
+Overview
+The challenge
+Screenshot
+Links
+My process
+Built with
+What I learned
+Continued development
+Useful resources
+Author
+Acknowledgments
+Overview
+The challenge
+Users should be able to:
 
-## Available Scripts
+Generate a password based on the selected inclusion options
+Copy the generated password to the computer's clipboard
+See a strength rating for their generated password
+View the optimal layout for the interface depending on their device's screen size
+See hover and focus states for all interactive elements on the page
 
-In the project directory, you can run:
 
-### `yarn start`
+Links
+Solution URL: https://github.com/Oleksandr-Berd/password-generator
+Live Site URL: https://storied-kataifi-ba46b8.netlify.app/
+My process
+Built with
+Semantic HTML5 markup
+CSS custom properties
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+CSS Grid
+Mobile-first workflow
+React - JS library
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Styled Components - For styles
+What I learned
+During this project, I had the opportunity to practice my React and Next.js skills. I learned how to create a password generator app that generates random passwords based on the selected inclusion options. I also implemented the functionality to copy the generated password to the clipboard and display a strength rating for the password.
 
-### `yarn test`
+Here's an example of the code I'm proud of:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+jsx
+Copy code
+// Code snippet I'm proud of
+const handleCopyPassword = () => {
+  const passwordElement = document.getElementById("password");
+  if (passwordElement) {
+    passwordElement.select();
+    document.execCommand("copy");
+  }
+};
+In the above code, I implemented the handleCopyPassword function, which is called when the user clicks the "Copy" button. The function selects the password text input element and copies its value to the clipboard using the document.execCommand("copy") method. This allows users to easily copy the generated password.
 
-### `yarn build`
+Continued development
+In future projects, I want to continue focusing on improving my CSS skills, particularly in creating responsive and visually appealing designs. I also plan to explore more advanced features and libraries in React and Next.js to enhance the functionality and user experience of my applications.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Useful resources
+MDN Web Docs - The MDN Web Docs provide detailed information and examples on various web development topics. It's a valuable resource for learning and understanding web technologies.
+Styled Components Documentation - The official documentation of Styled Components provides comprehensive guidance on how to use the library for styling React components. It's a great resource for learning and mastering Styled Components.
+Author
+Website - https://www.linkedin.com/in/oleksandr-berdychevskyi-83336761/
+Frontend Mentor - https://www.frontendmentor.io/profile/Oleksandr-Berd
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Acknowledgments
+I would like to acknowledge the Frontend Mentor community for the experience
