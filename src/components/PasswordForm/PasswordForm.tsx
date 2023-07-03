@@ -8,6 +8,7 @@ import { ReactComponent as CopySvg } from "assets/images/icon-copy.svg"
 import { ReactComponent as ArrowSvg } from "assets/images/icon-arrow-right.svg"
 
 import path from "assets/images/Path 2.png"
+import { useState } from "react";
 
 interface IProps {
     password: string,
@@ -27,6 +28,8 @@ interface IValues {
 
 
 const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): JSX.Element => {
+
+    const [isTemplate, setIsTemplate] = useState<boolean>(false)
 
     const formic = useFormik<IValues>({
         initialValues: {
@@ -53,13 +56,13 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
             if (values.symbols) values.arrayIndicators.push(values.symbols)
 
             const status = values.arrayIndicators;
-            const objectIndicators = { uppercase: values.uppercase, lowercase: values.lowercase, numbers:values.numbers, symbols: values.symbols }
-            
+            const objectIndicators = { uppercase: values.uppercase, lowercase: values.lowercase, numbers: values.numbers, symbols: values.symbols }
+
             handleGenerate(status, values.charLength, objectIndicators)
 
 
         }
-    })  
+    })
 
 
 
@@ -70,7 +73,7 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
         evt.preventDefault()
-
+        setIsTemplate(false)
         formic.handleSubmit(evt)
 
 
@@ -82,18 +85,34 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
     }
 
     const handleCopyPassword = () => {
-        navigator.clipboard.writeText(password);
 
-        toast.success(`🦄 The password copied to clipboard: ${password}!`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
+        if (password !== "") {
+            navigator.clipboard.writeText(password);
+
+            toast.success(`🦄 The password copied to clipboard: ${password}!`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            setIsTemplate(true)
+        } else {
+            toast.error(`Please, generate your password!`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }
+
     };
 
     const position = Number((formic.values.charLength / formic.values.maxLength * 100).toFixed(2))
@@ -111,8 +130,11 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
             pauseOnHover
             theme="dark" />
         <SC.DisplayContainer>
-            <SC.Display type="text" value={password} disabled />
-            <SC.CopyButton type="button" onClick={handleCopyPassword}><CopySvg /></SC.CopyButton>
+            <SC.Display type="text" value={password !== "" ? password : "P4$5W0rD!"} disabled style={password === "" ? { color: "#817D92" } : undefined} />
+            <SC.CopyContainer>
+                {isTemplate ? <SC.Copied>copied</SC.Copied> : null}
+                <SC.CopyButton type="button" onClick={handleCopyPassword}><CopySvg /></SC.CopyButton>
+            </SC.CopyContainer>
         </SC.DisplayContainer>
         <SC.OptionContainer>
             <div>
