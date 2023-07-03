@@ -52,9 +52,8 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
             if (values.symbols) values.arrayIndicators.push(values.symbols)
 
             const status = values.arrayIndicators
-            console.log(status);
             
-            handleGenerate(status)
+            handleGenerate(status, values.charLength)
 
 
         }

@@ -9,9 +9,9 @@ const PasswordGenerator = (): JSX.Element => {
 
   const strength = ["too weak!", "weak", "medium", "strong"]
    
-    const handleGenerate = (status:boolean[]) => {
+    const handleGenerate = (status: boolean[], charLength: number) => {
         
-        status.length > 0 ? setStrengthIndicator(strength[status.length - 1]) : setStrengthIndicator("too weak!")
+        status.length > 0 && charLength > 3 ? setStrengthIndicator(strength[status.length - 1]) : setStrengthIndicator("too weak!")
     }
     
     return (<SC.Container>
