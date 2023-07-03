@@ -51,9 +51,10 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
             if (values.numbers) values.arrayIndicators.push(values.numbers)
             if (values.symbols) values.arrayIndicators.push(values.symbols)
 
-            const status = values.arrayIndicators
+            const status = values.arrayIndicators;
+            const objectIndicators = { uppercase: values.uppercase, lowercase: values.lowercase, numbers:values.numbers, symbols: values.symbols }
             
-            handleGenerate(status, values.charLength)
+            handleGenerate(status, values.charLength, objectIndicators)
 
 
         }
@@ -80,7 +81,6 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
     }
 
     const position = Number((formic.values.charLength / formic.values.maxLength * 100).toFixed(2))
-    console.log(strengthIndicator);
 
 
     return (<form onSubmit={handleSubmit}>
