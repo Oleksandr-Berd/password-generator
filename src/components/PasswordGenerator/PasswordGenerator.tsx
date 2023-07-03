@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import PasswordForm from "components/PasswordForm/PasswordForm";
 import * as SC from "./PasswordGeneratorStyled"
+import { generatePassword, Options } from "utils/generatePassword";
 
 const PasswordGenerator = (): JSX.Element => {
     const [password, setPassword] = useState<string>("")
@@ -9,9 +10,12 @@ const PasswordGenerator = (): JSX.Element => {
 
   const strength = ["too weak!", "weak", "medium", "strong"]
    
-    const handleGenerate = (status:boolean[]) => {
+    const handleGenerate = (status: boolean[], charLength: number, options: Options) => {
         
-        status.length > 0 ? setStrengthIndicator(strength[status.length - 1]) : setStrengthIndicator("too weak!")
+        status.length > 0 && charLength > 3 ? setStrengthIndicator(strength[status.length - 1]) : setStrengthIndicator("too weak!")
+
+
+        setPassword(generatePassword(charLength, options))
     }
     
     return (<SC.Container>
