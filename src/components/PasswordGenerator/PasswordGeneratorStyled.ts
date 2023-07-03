@@ -8,11 +8,16 @@ export const Container = styled.div`
 
   text-align: center;
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     padding-top: 133px;
     padding-bottom: 196px;
     padding-right: 114px;
     padding-left: 114px;
+  }
+
+  @media (min-width: 1440px) {
+    padding-right: 450px;
+    padding-left: 450px;
   }
 `;
 

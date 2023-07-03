@@ -5,6 +5,7 @@ interface StyleProps {
   position?: number;
   active?: string | undefined;
   status_color?: string;
+  style?: any;
 }
 
 export const DisplayContainer = styled.div`
@@ -43,15 +44,48 @@ export const Display = styled.input`
   line-height: 1.29;
   border: none;
 
-  @media (min-width: 768px){
-    font-size: ${props => props.theme.size.M};
+  @media (min-width: 768px) {
+    font-size: ${(props) => props.theme.size.M};
     line-height: 1.34;
   }
 `;
 
+export const CopyContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+`
+
+export const Copied = styled.p`
+margin-right: ${props => props.theme.space[4]};
+
+text-transform: uppercase;
+
+font-size: 18px;
+font-weight: ${props => props.theme.weight.bold};
+color: ${props => props.theme.color.success}
+`
+
 export const CopyButton = styled.button`
   background-color: transparent;
   border: none;
+
+  & > * {
+    fill: ${(props) => props.theme.color.success};
+    transition: fill 0.3s ease;
+  }
+
+  @media (min-width: 1440px) {
+    &:active,
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      & > * {
+        fill: ${(props) => props.theme.color.text};
+        transition: fill 0.3s ease;
+      }
+    }
+  }
 `;
 
 export const OptionContainer = styled.div`
@@ -130,6 +164,21 @@ export const Range = styled(Form.Range)<StyleProps>`
       ${(props) => props.theme.color.background} 100%
     );
   }
+
+  @media (min-width: 1440px) {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:active,
+    &:hover,
+    &:focus {
+      &&&::-webkit-slider-thumb {
+        background-color: ${(props) => props.theme.color.background};
+        box-shadow: 0 0 2px 2px ${(props) => props.theme.color.success};
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+    }
+  }
 `;
 
 export const CheckBox = styled(Form.Check)`
@@ -178,6 +227,18 @@ export const CheckInput = styled(Form.Check.Input)`
   @media (min-width: 768px) {
     margin-right: ${(props) => props.theme.space[6]};
   }
+
+  @media (min-width: 1440px) {
+    transition: border-color 0.3s ease;
+
+    &&&:active,
+    &&&:hover,
+    &&&:focus {
+      border-color: ${(props) => props.theme.color.success};
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+  }
 `;
 
 export const CheckText = styled(Form.Check.Label)`
@@ -186,7 +247,7 @@ export const CheckText = styled(Form.Check.Label)`
     font-weight: ${(props) => props.theme.weight.bold};
     font-size: ${(props) => props.theme.size.N};
 
-    @media (min-width: 768px){
+    @media (min-width: 768px) {
       font-size: 18px;
       line-height: 1.28;
     }
@@ -223,7 +284,7 @@ export const StrengthTitle = styled.h3`
   font-size: ${(props) => props.theme.size.N};
 
   @media (min-width: 768px) {
-    font-size:18px;
+    font-size: 18px;
     line-height: 1.28;
   }
 `;
@@ -281,6 +342,8 @@ export const SubmitButton = styled.button`
 
   background-color: ${(props) => props.theme.color.success};
 
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
   & > span {
     margin-right: ${(props) => props.theme.space[4]};
 
@@ -302,6 +365,30 @@ export const SubmitButton = styled.button`
     margin-top: ${(props) => props.theme.space[8]};
 
     padding-top: 21px;
-    padding-bottom: ${props => props.theme.space[5]};
+    padding-bottom: ${(props) => props.theme.space[5]};
+  }
+
+  @media (min-width: 1440px) {
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: ${(props) => props.theme.color.backgroundSecondary};
+      border-color: ${(props) => props.theme.color.success};
+
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    & > * {
+      transition: color 0.3s ease, fill 0.3s ease;
+    }
+
+    &:active,
+    &:hover,
+    &:focus > * {
+      color: ${(props) => props.theme.color.success};
+      fill: ${(props) => props.theme.color.success};
+
+      transition: color 0.3s ease, fill 0.3s ease;
+    }
   }
 `;
