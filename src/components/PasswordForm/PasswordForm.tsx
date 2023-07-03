@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
 
 import * as SC from "./PasswordFormStyled"
 
@@ -80,13 +81,38 @@ const PasswordForm = ({ password, handleGenerate, strengthIndicator }: IProps): 
 
     }
 
+    const handleCopyPassword = () => {
+        navigator.clipboard.writeText(password);
+
+        toast.success(`🦄 The password copied to clipboard: ${password}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    };
+
     const position = Number((formic.values.charLength / formic.values.maxLength * 100).toFixed(2))
 
 
     return (<form onSubmit={handleSubmit}>
+        <ToastContainer position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark" />
         <SC.DisplayContainer>
             <SC.Display type="text" value={password} disabled />
-            <SC.CopyButton><CopySvg /></SC.CopyButton>
+            <SC.CopyButton type="button" onClick={handleCopyPassword}><CopySvg /></SC.CopyButton>
         </SC.DisplayContainer>
         <SC.OptionContainer>
             <div>
